@@ -17,7 +17,7 @@ creds = ServiceAccountCredentials.from_json_keyfile_dict(
     scope
 )
 gc = gspread.authorize(creds)
-sheet = gc.open_by_key(st.secrets["sheet_id"]).collate  # first worksheet
+sheet = gc.open_by_key(st.secrets["sheet_id"]).sheet1  # first worksheet
 
 # --- Page config -------------------------------------------------------------
 st.set_page_config(page_title="Tattoo & Piercing - Customer Consent & Release Form", page_icon="🖊️")
