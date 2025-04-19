@@ -133,7 +133,7 @@ if submitted:
         st.error("❌ Please complete all required fields.")
     else:
         row = [
-            datetime.now().isoformat(),
+            #datetime.now().isoformat(),
             full_name,
             service,
             dob.isoformat(),
@@ -164,9 +164,15 @@ if submitted:
             signature
         ]
 
+       
 
-sheet_by_name.append_row(row)
-st.success("✅ Thank you! Your response has been recorded.")
+# Compute the next empty row index
+    next_row = len(sheet_by_name.get_all_values()) + 1
+    cell_range = f"A{next_row}"
+    sheet_by_name.update(cell_range, [row])
+
+    #sheet_by_name.append_row(row)
+    st.success("✅ Thank you! Your response has been recorded.")
 
 # --- Footer ------------------------------------------------------------------
 st.markdown("---")
