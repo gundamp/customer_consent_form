@@ -3,16 +3,7 @@ import pandas as pd
 from datetime import datetime, date
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-from streamlit_js_eval import streamlit_js_eval, get_geolocation
 
-# Capture client IP & more
-info = streamlit_js_eval(js_expressions="window.navigator.userAgent", key="info")
-#if info:
-#    st.write("Client Info:", info)
-
-#geo = get_geolocation()
-#if geo:
-#    st.write("IP-based Location:", geo)
 
 
 # --- Google Sheets config ---------------------------------------------------
@@ -172,8 +163,7 @@ if submitted:
             q_other,
             other_details,
             date_of_consent.isoformat(),
-            signature,
-            info
+            signature
         ]
 
        
