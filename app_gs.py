@@ -11,7 +11,7 @@ scope = ["https://spreadsheets.google.com/feeds",
              "https://www.googleapis.com/auth/drive.file", 
              "https://www.googleapis.com/auth/drive"]
 
-creds = ServiceAccountCredentials.from_json_keyfile_dict(
+creds_json = ServiceAccountCredentials.from_json_keyfile_dict(
     dict(st.secrets["gcp_service_account"]),
     scope
 )
@@ -34,7 +34,7 @@ SHEET_NAME = 'collate'
 #CREDENTIALS_FILE = './credentials.json'
 
 # Connect to the Google Sheet
-sheet_by_name = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name=SHEET_NAME)
+sheet_by_name = connect_to_gsheet(creds_json, SPREADSHEET_NAME, sheet_name=SHEET_NAME)
 
 
 #gc = gspread.authorize(creds)
