@@ -164,10 +164,9 @@ if submitted:
             signature
         ]
 
-        #last_filled_row = len(sheet_by_name.get_all_values())
-        #sheet_by_name.insert_row(row, last_filled_row + 1)
-        sheet_by_name.append_row(row)
-        st.success("✅ Thank you! Your response has been recorded.")
+
+sheet_by_name.append_row(row)
+st.success("✅ Thank you! Your response has been recorded.")
 
 # --- Footer ------------------------------------------------------------------
 st.markdown("---")
