@@ -86,9 +86,9 @@ with st.form("consent_form"):
     id_number = st.text_input("ID Number")
     id_expiry_date = st.date_input("ID Expiry Date", datetime.today(), min_value = date.today(), max_value=date(2049,12,31))
     #artist = st.selectbox("Artist", ["Artist 1", "Artist 2", "Artist 3"])
-    placement = st.text_input("Placement (e.g. left arm, right leg)")
-    description = st.text_input("Description (e.g. star, flower, pet)")
-    price = st.number_input("Price", min_value=0, format="%d", step=1)
+    placement = st.text_input("Placement (扎针部位)")
+    description = st.text_input("Description (扎针内容)")
+    price = st.number_input("Price (as agreed with Artist)", min_value = 0, format = "%d", step = 1)
 
     st.markdown("""
     <u><strong>PLEASE ANSWER THE FOLLOWING QUESTIONS</strong></u><br>
