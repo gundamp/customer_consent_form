@@ -6,18 +6,39 @@ from datetime import datetime, date
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
+scope = ["https://spreadsheets.google.com/feeds", 
+             'https://www.googleapis.com/auth/spreadsheets',
+             "https://www.googleapis.com/auth/drive.file", 
+             "https://www.googleapis.com/auth/drive"]
 
-# —– Authenticate to Google Sheets —–
-scope = [
-    "https://spreadsheets.google.com/feeds",
-    "https://www.googleapis.com/auth/drive"
-]
 creds = ServiceAccountCredentials.from_json_keyfile_dict(
     dict(st.secrets["gcp_service_account"]),
     scope
 )
-gc = gspread.authorize(creds)
-sheet = gc.open_by_key(st.secrets["sheet_id"]).sheet1  # first worksheet
+
+# Authenticate and connect to Google Sheets
+def connect_to_gsheet(creds_json, spreadsheet_name, sheet_name):
+    scope = ["https://spreadsheets.google.com/feeds", 
+             'https://www.googleapis.com/auth/spreadsheets',
+             "https://www.googleapis.com/auth/drive.file", 
+             "https://www.googleapis.com/auth/drive"]
+    
+    credentials = ServiceAccountCredentials.from_json_keyfile_name(creds_json, scope)
+    client = gspread.authorize(credentials)
+    spreadsheet = client.open(spreadsheet_name)  
+    return spreadsheet.worksheet(sheet_name)  # Access specific sheet by name
+
+# Google Sheet credentials and details
+SPREADSHEET_NAME = 'customer_consent_form_little_art_tattoo'
+SHEET_NAME = 'collate'
+#CREDENTIALS_FILE = './credentials.json'
+
+# Connect to the Google Sheet
+sheet_by_name = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name=SHEET_NAME)
+
+
+#gc = gspread.authorize(creds)
+#sheet = gc.open_by_key(st.secrets["sheet_id"]).collate  # first worksheet
 
 # --- Page config -------------------------------------------------------------
 st.set_page_config(page_title="Tattoo & Piercing - Customer Consent & Release Form", page_icon="🖊️")
@@ -188,7 +209,7 @@ if submitted:
         signature
     ]
     # append the row (pushes it to the bottom of the sheet)
-    sheet.append_row(row)
+    sheet_by_name.append_row(row)
 
     st.success("✅ Thank you! Your response has been recorded.")
 
