@@ -135,7 +135,9 @@ if submitted:
         row = [
             datetime.now().isoformat(),
             full_name,
+            service,
             dob.isoformat(),
+            artist,
             age,
             email,
             suburb,
@@ -143,7 +145,8 @@ if submitted:
             id_type,
             id_number,
             id_expiry_date.isoformat(),
-            service,
+            placement,
+            description,
             price,
             q_eat,
             q_alcohol,
@@ -161,8 +164,8 @@ if submitted:
             signature
         ]
 
-        last_filled_row = len(sheet_by_name.get_all_values())
-        sheet_by_name.insert_row(row, last_filled_row + 1)
+        #last_filled_row = len(sheet_by_name.get_all_values())
+        #sheet_by_name.insert_row(row, last_filled_row + 1)
         sheet_by_name.append_row(row)
         st.success("✅ Thank you! Your response has been recorded.")
 
