@@ -129,7 +129,7 @@ with st.form("consent_form"):
 
 # --- Submission Handling -----------------------------------------------------
 if submitted:
-    if not full_name or not email or not phone or not suburb or not id_number or not signature:
+    if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not placement or not description or not price or not signature:
         st.error("❌ Please complete all required fields.")
     else:
         row = [
