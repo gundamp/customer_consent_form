@@ -10,7 +10,7 @@ info = streamlit_js_eval(js_expressions="window.navigator.userAgent", key="info"
 #if info:
 #    st.write("Client Info:", info)
 
-geo = get_geolocation()
+#geo = get_geolocation()
 #if geo:
 #    st.write("IP-based Location:", geo)
 
@@ -173,8 +173,7 @@ if submitted:
             other_details,
             date_of_consent.isoformat(),
             signature,
-            info,
-            geo
+            info
         ]
 
        
