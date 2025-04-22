@@ -56,7 +56,7 @@ dob = st.date_input(
 service = st.selectbox("Select a Service", ["Tattoo", "Piercing"], key = "service")
 
 if service == "Tattoo":
-    artist = st.selectbox("Artist", ["Raku", "Kobey", "Violet", "Emily", "Jusqu", "Bonnie", "Phoebe"], key = "artist")
+    artist = st.selectbox("Artist", ["Raku", "Kobey", "Violet", "Emily", "Jusqu", "Bonnie", "Phoebe", "Guest Artist", "Other"], key = "artist")
 else:
     artist = "Piercing"
 
