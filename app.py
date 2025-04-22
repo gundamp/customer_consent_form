@@ -1,9 +1,19 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime, date
+import re
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+#from streamlit_js_eval import streamlit_js_eval, get_geolocation
 
+# Capture client IP & more
+#info = streamlit_js_eval(js_expressions="window.navigator.userAgent", key="info")
+#if info:
+#    st.write("Client Info:", info)
+
+#geo = get_geolocation()
+#if geo:
+#    st.write("IP-based Location:", geo)
 
 
 # --- Google Sheets config ---------------------------------------------------
@@ -82,8 +92,19 @@ I HAVE RECEIVED A COPY OF THE WRITTEN TATTOO AFTERCARE INSTRUCTIONS which I have
 with st.form("consent_form"):
     full_name = st.text_input("Full Name")
     email = st.text_input("Email Address")
+
+    email_pattern = r"^[\w\.-]+@[\w\.-]+\.\w+$"
+
+    if email and not re.fullmatch(email_pattern, email):
+        st.error("Please enter a valid email address.")
+        
     suburb = st.text_input("Suburb")
     phone = st.text_input("Phone Number")
+
+# Validate the phone number
+    if phone and not re.fullmatch(r"0\d{9}", phone):
+        st.error("Phone number must be exactly 10 digits and start with 0.")
+
     id_type = st.selectbox("ID Type", ["Driver's License", "Passport", "Other"])
     id_number = st.text_input("ID Number")
     id_expiry_date = st.date_input("ID Expiry Date", datetime.today(), min_value = date.today(), max_value=date(2049,12,31))
@@ -164,6 +185,7 @@ if submitted:
             other_details,
             date_of_consent.isoformat(),
             signature
+        
         ]
 
        
