@@ -97,7 +97,7 @@ with st.form("consent_form"):
 
     if email and not re.fullmatch(email_pattern, email):
         st.error("Please enter a valid email address.")
-        
+
     suburb = st.text_input("Suburb")
     phone = st.text_input("Phone Number")
 
@@ -150,10 +150,21 @@ with st.form("consent_form"):
     disabled = underage_tattoo or underage_other
     submitted = st.form_submit_button("Submit", disabled=disabled)
 
+
 # --- Submission Handling -----------------------------------------------------
+phone_valid = re.fullmatch(r"0\d{9}", phone)
+email_valid = re.fullmatch(r"^[\w\.-]+@[\w\.-]+\.\w+$", email)
+
 if submitted:
     if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not placement or not description or not price or not signature:
         st.error("❌ Please complete all required fields.")
+
+    elif not phone_valid:
+        st.error("❌ Phone number must be exactly 10 digits and start with 0.")
+    
+    elif not email_valid:
+        st.error("❌ Please enter a valid email address.")
+        
     else:
         row = [
             #datetime.now().isoformat(),
