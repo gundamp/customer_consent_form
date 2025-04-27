@@ -107,7 +107,7 @@ with st.form("consent_form", clear_on_submit = False):
     if phone and not re.fullmatch(r"0\d{9}", phone):
         st.error("Phone number must be exactly 10 digits and start with 0.")
 
-    id_type = st.selectbox("ID Type", ["Driver's License", "Passport", "Other"])
+    id_type = st.selectbox("ID Type", ["Driver's License", "Passport", "Photo ID", "Other"])
     id_number = st.text_input("ID Number")
     id_expiry_date = st.date_input("ID Expiry Date", datetime.today(), min_value = date.today(), max_value=date(2049,12,31))
     #artist = st.selectbox("Artist", ["Artist 1", "Artist 2", "Artist 3"])
