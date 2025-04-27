@@ -55,8 +55,10 @@ dob = st.date_input(
 
 service = st.selectbox("Select a Service", ["Tattoo", "Piercing"], key = "service")
 
+### Free-text
 if service == "Tattoo":
-    artist = st.selectbox("Artist", ["Raku", "Kobey", "Violet", "Emily", "Jusqu", "Bonnie", "Phoebe", "Guest Artist", "Other"], key = "artist")
+    #artist = st.selectbox("Artist", ["Raku", "Kobey", "Violet", "Emily", "Jusqu", "Bonnie", "Phoebe"], key = "artist")
+    artist = st.text_input("Artist")
 else:
     artist = "Piercing"
 
@@ -111,7 +113,11 @@ with st.form("consent_form"):
     #artist = st.selectbox("Artist", ["Artist 1", "Artist 2", "Artist 3"])
     placement = st.text_input("Placement (扎针部位)")
     description = st.text_input("Description (扎针内容)")
-    price = st.number_input("Price (as agreed with Artist)", min_value = 0, format = "%d", step = 1)
+
+    ### Allow $0
+    price = st.number_input("Price (as agreed with Artist)", min_value = -1, format = "%d", step = 1)
+
+    source = st.selectbox("How did you hear about us =]", ["Red Note (小红书)", "Instagram", "Google", "Friends / Word of Mouth", "Other"], key = "source")
 
     st.markdown("""
     <u><strong>PLEASE ANSWER THE FOLLOWING QUESTIONS</strong></u><br>
@@ -182,6 +188,7 @@ if submitted:
             placement,
             description,
             price,
+            source,
             q_eat,
             q_alcohol,
             q_med,
@@ -212,3 +219,7 @@ if submitted:
 # --- Footer ------------------------------------------------------------------
 st.markdown("---")
 # st.caption("Built with ❤️ using Streamlit")
+
+
+
+### 怎么找到我们
