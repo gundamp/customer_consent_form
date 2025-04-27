@@ -91,7 +91,7 @@ I HAVE RECEIVED A COPY OF THE WRITTEN TATTOO AFTERCARE INSTRUCTIONS which I have
 """)
 
 # --- Form Section -----------------------------------------------------------
-with st.form("consent_form"):
+with st.form("consent_form", clear_on_submit = False):
     full_name = st.text_input("Full Name")
     email = st.text_input("Email Address")
 
@@ -162,7 +162,7 @@ phone_valid = re.fullmatch(r"0\d{9}", phone)
 email_valid = re.fullmatch(r"^[\w\.-]+@[\w\.-]+\.\w+$", email)
 
 if submitted:
-    if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not placement or not description or not price or not signature:
+    if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not placement or not description or not signature:
         st.error("❌ Please complete all required fields.")
 
     elif not phone_valid:
@@ -170,6 +170,10 @@ if submitted:
     
     elif not email_valid:
         st.error("❌ Please enter a valid email address.")
+
+    elif price is None:
+            st.error("Please enter the price.")
+
         
     else:
         row = [
@@ -222,4 +226,4 @@ st.markdown("---")
 
 
 
-### 怎么找到我们
+
