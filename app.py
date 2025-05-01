@@ -73,7 +73,14 @@ underage_other = service != "Tattoo" and age < 16
 if underage_tattoo:
     st.warning("⚠️ You must be at least 18 years old for this service.")
 elif underage_other:
-    st.warning("⚠️ You must be at least 16 years old for this service.")
+    st.warning("⚠️ Your guardian must fill out the following information for this service.")
+
+    # Show guardian information fields
+    st.markdown("### Guardian Information (Required for Underage Consent)")
+    guardian_name = st.text_input("Guardian's Full Name")
+    #guardian_relationship = st.text_input("Relationship to Minor")
+    guardian_id_type = st.selectbox("Guardian's ID Type", ["Driver's License", "Passport", "Photo ID", "Other"])
+    guardian_id_no = st.text_input("Guardian's ID Number")
 
 # --- Consent Text -----------------------------------------------------------
 st.markdown("""
@@ -153,8 +160,8 @@ with st.form("consent_form", clear_on_submit = False):
     date_of_consent = st.date_input("Date of Consent", datetime.today())
     signature = st.text_area("Signature (please print your name)")
 
-    disabled = underage_tattoo or underage_other
-    submitted = st.form_submit_button("Submit", disabled=disabled)
+    disabled = underage_tattoo #or underage_other
+    submitted = st.form_submit_button("Submit", disabled = disabled)
 
 
 # --- Submission Handling -----------------------------------------------------
@@ -162,7 +169,7 @@ phone_valid = re.fullmatch(r"0\d{9}", phone)
 email_valid = re.fullmatch(r"^[\w\.-]+@[\w\.-]+\.\w+$", email)
 
 if submitted:
-    if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not placement or not description or not signature:
+    if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not placement or not description or not signature or not guardian_name or not guardian_id_type or not guardian_id_no:
         st.error("❌ Please complete all required fields.")
 
     elif not phone_valid:
