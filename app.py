@@ -70,6 +70,10 @@ st.markdown(f"**Age (last birthday):** {age}")
 underage_tattoo = service == "Tattoo" and age < 18
 underage_other = service != "Tattoo" and age < 16
 
+guardian_name = ""
+guardian_id_type = "Other"
+guardian_id_no = ""
+
 if underage_tattoo:
     st.warning("⚠️ You must be at least 18 years old for this service.")
 elif underage_other:
@@ -169,7 +173,7 @@ phone_valid = re.fullmatch(r"0\d{9}", phone)
 email_valid = re.fullmatch(r"^[\w\.-]+@[\w\.-]+\.\w+$", email)
 
 if submitted:
-    if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not placement or not description or not signature: #or not guardian_name or not guardian_id_type or not guardian_id_no:
+    if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not placement or not description or not signature:
         st.error("❌ Please complete all required fields.")
 
     elif not phone_valid:
@@ -181,6 +185,8 @@ if submitted:
     elif price is None:
             st.error("Please enter the price.")
 
+    elif underage_other and (not guardian_name or not guardian_id_type or not guardian_id_no):
+        st.error("❌ Please fill out Guardian information.")
         
     else:
         row = [
@@ -213,7 +219,10 @@ if submitted:
             q_other,
             other_details,
             date_of_consent.isoformat(),
-            signature
+            signature,
+            guardian_name,
+            guardian_id_type,
+            guardian_id_no
         
         ]
 
