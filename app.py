@@ -169,7 +169,7 @@ phone_valid = re.fullmatch(r"0\d{9}", phone)
 email_valid = re.fullmatch(r"^[\w\.-]+@[\w\.-]+\.\w+$", email)
 
 if submitted:
-    if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not placement or not description or not signature #or not guardian_name or not guardian_id_type or not guardian_id_no:
+    if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not placement or not description or not signature: #or not guardian_name or not guardian_id_type or not guardian_id_no:
         st.error("❌ Please complete all required fields.")
 
     elif not phone_valid:
