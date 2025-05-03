@@ -128,13 +128,13 @@ with st.form("consent_form", clear_on_submit = False):
     id_number = st.text_input("ID Number")
     id_expiry_date = st.date_input("ID Expiry Date", datetime.today(), min_value = date.today(), max_value=date(2049,12,31))
     #artist = st.selectbox("Artist", ["Artist 1", "Artist 2", "Artist 3"])
-    placement = st.text_input("Placement (扎针部位)")
-    description = st.text_input("Description (扎针内容)")
+    placement = st.text_input("Placement")
+    description = st.text_input("Description")
 
     ### Allow $0
     price = st.number_input("Price (as agreed with Artist)", min_value = 0, format = "%d", step = 1)
 
-    source = st.selectbox("How did you hear about us =]", ["Red Note (小红书)", "Instagram", "Google", "Friends / Word of Mouth", "Other"], key = "source")
+    source = st.selectbox("How did you hear about us =]", ["Red Note", "Instagram", "Google", "Friends / Word of Mouth", "Other"], key = "source")
 
     st.markdown("""
     <u><strong>PLEASE ANSWER THE FOLLOWING QUESTIONS</strong></u><br>
