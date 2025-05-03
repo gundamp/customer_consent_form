@@ -1,3 +1,9 @@
+
+# 1. Update SPREADSHEET_NAME and SHEET_NAME in this script
+# 2. Update Google Sheets ID in Streamlit secrets on Streamlit cloud
+
+
+
 import streamlit as st
 import pandas as pd
 from datetime import datetime, date
@@ -36,8 +42,8 @@ def connect_to_gsheet(creds, spreadsheet_name, sheet_name):
     return spreadsheet.worksheet(sheet_name)
 
 # Set Google Sheet info
-SPREADSHEET_NAME = 'test'
-SHEET_NAME = 'collect'
+SPREADSHEET_NAME = 'customer_consent_form_for_April'
+SHEET_NAME = 'form_capture'
 sheet_by_name = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name = SHEET_NAME)
 
 # --- Page Config ------------------------------------------------------------
