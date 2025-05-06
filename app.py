@@ -38,7 +38,9 @@ def connect_to_gsheet(creds, spreadsheet_name, sheet_name):
 # Set Google Sheet info
 SPREADSHEET_NAME = 'customer_consent_form_little_art_tattoo'
 SHEET_NAME = 'collate'
+SHEET_NAME_backup = 'backup'
 sheet_by_name = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name = SHEET_NAME)
+sheet_backup = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name = SHEET_NAME_backup)
 
 # --- Page Config ------------------------------------------------------------
 st.set_page_config(page_title="Tattoo & Piercing - Customer Consent & Release Form", page_icon="🖊️")
@@ -231,6 +233,11 @@ if submitted:
         next_row = len(sheet_by_name.get_all_values()) + 1
         cell_range = f"A{next_row}"
         sheet_by_name.update(cell_range, [row])
+
+
+        next_row_backup = len(sheet_backup.get_all_values()) + 1
+        cell_range_backup = f"A{next_row_backup}"
+        sheet_backup.update(cell_range_backup, [row])
 
     #sheet_by_name.append_row(row)
         st.success("✅ Thank you! Your response has been recorded.")
