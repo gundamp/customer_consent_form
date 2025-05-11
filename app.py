@@ -1,9 +1,20 @@
+
+# 1. Update SPREADSHEET_NAME and SHEET_NAME in this script
+# 2. Update Google Sheets ID in Streamlit secrets on Streamlit cloud
+
+
+
 import streamlit as st
 import pandas as pd
 from datetime import datetime, date
 import re
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
+import os
+
 #from streamlit_js_eval import streamlit_js_eval, get_geolocation
 
 # Capture client IP & more
@@ -38,9 +49,23 @@ def connect_to_gsheet(creds, spreadsheet_name, sheet_name):
 # Set Google Sheet info
 SPREADSHEET_NAME = 'customer_consent_form_little_art_tattoo'
 SHEET_NAME = 'collate'
+sheet_by_name = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name = SHEET_NAME)
 SHEET_NAME_backup = 'backup'
 sheet_by_name = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name = SHEET_NAME)
 sheet_backup = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name = SHEET_NAME_backup)
+
+
+# --- For image uploads -----------------------------------------------------
+folder_id = st.secrets["drive_folder_id"]
+
+gauth = GoogleAuth()
+gauth.credentials = creds
+drive = GoogleDrive(gauth)
+
+
+
+
+
 
 # --- Page Config ------------------------------------------------------------
 st.set_page_config(page_title="Tattoo & Piercing - Customer Consent & Release Form", page_icon="🖊️")
@@ -88,6 +113,32 @@ elif underage_other:
     guardian_id_type = st.selectbox("Guardian's ID Type", ["Driver's License", "Passport", "Photo ID", "Other"])
     guardian_id_no = st.text_input("Guardian's ID Number")
 
+# --- Image Upload Section ---------------------------------------------------
+    #st.title("Upload Image to Google Drive")
+    st.markdown("#### ID Photo Upload")
+    with st.form("upload_id_photo"):
+        uploaded_id = st.file_uploader("Upload ID Photo", type = ["png", "PNG", "jpg", "JPG", "jpeg", "JPEG"])
+        submit_id = st.form_submit_button("Upload")
+
+        if uploaded_id and submit_id:
+        # Save to temp file
+            with open(uploaded_id.name, "wb") as f:
+                f.write(uploaded_id.getbuffer())
+
+        # Upload to Google Drive
+            file_drive = drive.CreateFile({
+                'title': uploaded_id.name,
+                'parents': [{"id": folder_id}]
+            })
+            file_drive.SetContentFile(uploaded_id.name)
+            file_drive.Upload()
+
+        # Cleanup
+            os.remove(uploaded_id.name)
+
+            st.success(f"Uploaded: {uploaded_id.name}")
+            #st.markdown(f"[View on Google Drive]({file_drive['alternateLink']})")
+
 # --- Consent Text -----------------------------------------------------------
 st.markdown("""
 I hereby give consent to the Artist named in this form of the Tattoo & Piercing studio to perform a tattoo and in consideration of doing so, I hereby release the tattoo studio, and its employees and agents from all manner of liabilities, claims, actions and demands in law or in equity, which I or my heirs might now or hereafter have by reason of complying with my request to be tattooed.
@@ -124,13 +175,13 @@ with st.form("consent_form", clear_on_submit = False):
     id_number = st.text_input("ID Number")
     id_expiry_date = st.date_input("ID Expiry Date", datetime.today(), min_value = date.today(), max_value=date(2049,12,31))
     #artist = st.selectbox("Artist", ["Artist 1", "Artist 2", "Artist 3"])
-    placement = st.text_input("Placement (扎针部位)")
-    description = st.text_input("Description (扎针内容)")
+    placement = st.text_input("Placement")
+    description = st.text_input("Description")
 
     ### Allow $0
     price = st.number_input("Price (as agreed with Artist)", min_value = 0, format = "%d", step = 1)
 
-    source = st.selectbox("How did you hear about us =]", ["Red Note (小红书)", "Instagram", "Google", "Friends / Word of Mouth", "Other"], key = "source")
+    source = st.selectbox("How did you hear about us =]", ["Red Note", "Instagram", "Google", "Friends / Word of Mouth", "Other"], key = "source")
 
     st.markdown("""
     <u><strong>PLEASE ANSWER THE FOLLOWING QUESTIONS</strong></u><br>
@@ -233,7 +284,6 @@ if submitted:
         next_row = len(sheet_by_name.get_all_values()) + 1
         cell_range = f"A{next_row}"
         sheet_by_name.update(cell_range, [row])
-
 
         next_row_backup = len(sheet_backup.get_all_values()) + 1
         cell_range_backup = f"A{next_row_backup}"
