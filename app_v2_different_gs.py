@@ -10,6 +10,11 @@ from datetime import datetime, date
 import re
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
+import os
+
 #from streamlit_js_eval import streamlit_js_eval, get_geolocation
 
 # Capture client IP & more
@@ -42,9 +47,25 @@ def connect_to_gsheet(creds, spreadsheet_name, sheet_name):
     return spreadsheet.worksheet(sheet_name)
 
 # Set Google Sheet info
-SPREADSHEET_NAME = 'customer_consent_form_for_April'
-SHEET_NAME = 'form_capture'
+SPREADSHEET_NAME = 'customer_consent_form_little_art_tattoo'
+SHEET_NAME = 'collate'
 sheet_by_name = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name = SHEET_NAME)
+SHEET_NAME_backup = 'backup'
+sheet_by_name = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name = SHEET_NAME)
+sheet_backup = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name = SHEET_NAME_backup)
+
+
+# --- For image uploads -----------------------------------------------------
+folder_id = st.secrets["drive_folder_id"]
+
+gauth = GoogleAuth()
+gauth.credentials = creds
+drive = GoogleDrive(gauth)
+
+
+
+
+
 
 # --- Page Config ------------------------------------------------------------
 st.set_page_config(page_title="Tattoo & Piercing - Customer Consent & Release Form", page_icon="🖊️")
@@ -91,6 +112,32 @@ elif underage_other:
     #guardian_relationship = st.text_input("Relationship to Minor")
     guardian_id_type = st.selectbox("Guardian's ID Type", ["Driver's License", "Passport", "Photo ID", "Other"])
     guardian_id_no = st.text_input("Guardian's ID Number")
+
+# --- Image Upload Section ---------------------------------------------------
+    #st.title("Upload Image to Google Drive")
+    st.markdown("#### ID Photo Upload")
+    with st.form("upload_id_photo"):
+        uploaded_id = st.file_uploader("Upload ID Photo", type = ["png", "PNG", "jpg", "JPG", "jpeg", "JPEG"])
+        submit_id = st.form_submit_button("Upload")
+
+        if uploaded_id and submit_id:
+        # Save to temp file
+            with open(uploaded_id.name, "wb") as f:
+                f.write(uploaded_id.getbuffer())
+
+        # Upload to Google Drive
+            file_drive = drive.CreateFile({
+                'title': uploaded_id.name,
+                'parents': [{"id": folder_id}]
+            })
+            file_drive.SetContentFile(uploaded_id.name)
+            file_drive.Upload()
+
+        # Cleanup
+            os.remove(uploaded_id.name)
+
+            st.success(f"Uploaded: {uploaded_id.name}")
+            #st.markdown(f"[View on Google Drive]({file_drive['alternateLink']})")
 
 # --- Consent Text -----------------------------------------------------------
 st.markdown("""
@@ -238,13 +285,13 @@ if submitted:
         cell_range = f"A{next_row}"
         sheet_by_name.update(cell_range, [row])
 
+        next_row_backup = len(sheet_backup.get_all_values()) + 1
+        cell_range_backup = f"A{next_row_backup}"
+        sheet_backup.update(cell_range_backup, [row])
+
     #sheet_by_name.append_row(row)
         st.success("✅ Thank you! Your response has been recorded.")
 
 # --- Footer ------------------------------------------------------------------
 st.markdown("---")
 # st.caption("Built with ❤️ using Streamlit")
-
-
-
-
