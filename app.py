@@ -175,8 +175,8 @@ with st.form("consent_form", clear_on_submit = False):
     id_number = st.text_input("ID Number")
     id_expiry_date = st.date_input("ID Expiry Date", datetime.today(), min_value = date.today(), max_value=date(2049,12,31))
     #artist = st.selectbox("Artist", ["Artist 1", "Artist 2", "Artist 3"])
-    placement = st.text_input("Placement")
-    description = st.text_input("Description")
+    placement = st.text_input("Placement (部位)")
+    description = st.text_input("Description (内容, P for Piercing)")
 
     ### Allow $0
     price = st.number_input("Price (as agreed with Artist)", min_value = 0, format = "%d", step = 1)
