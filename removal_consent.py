@@ -57,7 +57,7 @@ sheet_by_name = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name = SHEET_NA
 
 
 # --- For image uploads -----------------------------------------------------
-folder_id = st.secrets["drive_folder_id"]
+#folder_id = st.secrets["drive_folder_id"]
 
 #gauth = GoogleAuth()
 #gauth.credentials = creds
