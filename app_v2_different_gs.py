@@ -87,7 +87,7 @@ if service == "Tattoo":
     #artist = st.selectbox("Artist", ["Raku", "Kobey", "Violet", "Emily", "Jusqu", "Bonnie", "Phoebe"], key = "artist")
     artist = st.text_input("Artist")
 else:
-    artist = "Piercing"
+    artist = st.text_input("Artist")
 
 # Calculate Age
 today = date.today()
@@ -190,17 +190,17 @@ with st.form("consent_form", clear_on_submit = False):
                 """, unsafe_allow_html=True)
 
     q_eat = st.radio("Have you eaten within the last four (4) hours?", ["Yes", "No"])
-    q_alcohol = st.radio("Have you had any alcoholic beverages in the last eight (8) hours?", ["Yes", "No"])
-    q_med = st.radio("Have you taken aspirin, ibuprofen or blood thinners in the last twenty four (24) hours?", ["Yes", "No"])
-    q_bleed = st.radio("Are you prone to heavy bleeding?", ["Yes", "No"])
-    q_faint = st.radio("Are you prone to fainting?", ["Yes", "No"])
-    q_breastfeed = st.radio("Are you pregnant or breastfeeding?", ["Yes", "No"])
-    q_bloodpressure = st.radio("Do you have high blood pressure?", ["Yes", "No"])
-    q_latex = st.radio("Do you have a latex allergy?", ["Yes", "No"])
+    q_alcohol = st.radio("Have you had any alcoholic beverages in the last eight (8) hours?", ["Yes", "No"], index = 1)
+    q_med = st.radio("Have you taken aspirin, ibuprofen or blood thinners in the last twenty four (24) hours?", ["Yes", "No"], index = 1)
+    q_bleed = st.radio("Are you prone to heavy bleeding?", ["Yes", "No"], index = 1)
+    q_faint = st.radio("Are you prone to fainting?", ["Yes", "No"], index = 1)
+    q_breastfeed = st.radio("Are you pregnant or breastfeeding?", ["Yes", "No"], index = 1)
+    q_bloodpressure = st.radio("Do you have high blood pressure?", ["Yes", "No"], index = 1)
+    q_latex = st.radio("Do you have a latex allergy?", ["Yes", "No"], index = 1)
     q_allergy = st.radio("Do you have any other known allergies?", ["Yes", "No"])
     allergy_details = st.text_input("If yes, please advise:", key="allergy_details") if q_allergy == "Yes" else ""
 
-    q_other = st.radio("Do you have any other conditions which might affect the healing of this tattoo?", ["Yes", "No"])
+    q_other = st.radio("Do you have any other conditions which might affect the healing of this tattoo?", ["Yes", "No"], index = 1)
     other_details = st.text_input("If yes, please advise:", key="other_details") if q_other == "Yes" else ""
 
     st.markdown("""
