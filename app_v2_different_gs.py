@@ -197,7 +197,7 @@ with st.form("consent_form", clear_on_submit = False):
     q_breastfeed = st.radio("Are you pregnant or breastfeeding?", ["Yes", "No"], index = 1)
     q_bloodpressure = st.radio("Do you have high blood pressure?", ["Yes", "No"], index = 1)
     q_latex = st.radio("Do you have a latex allergy?", ["Yes", "No"], index = 1)
-    q_allergy = st.radio("Do you have any other known allergies?", ["Yes", "No"])
+    q_allergy = st.radio("Do you have any other known allergies?", ["Yes", "No"], index = 1)
     allergy_details = st.text_input("If yes, please advise:", key="allergy_details") if q_allergy == "Yes" else ""
 
     q_other = st.radio("Do you have any other conditions which might affect the healing of this tattoo?", ["Yes", "No"], index = 1)
