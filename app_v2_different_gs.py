@@ -80,6 +80,13 @@ dob = st.date_input(
     key="dob"
 )
 
+#st.write(f"The Date of Birth you've put in is {dob.strftime('%B %d, %Y')}")
+st.markdown(
+    f"<span style='color:red'><strong>The Date of Birth you've put in is {dob.strftime('%B %d, %Y')}</strong></span>",
+    unsafe_allow_html=True
+)
+
+
 service = st.selectbox("Select a Service", ["Tattoo", "Piercing"], key = "service")
 
 ### Free-text
