@@ -81,6 +81,12 @@ dob = st.date_input(
 )
 
 #st.write(f"The Date of Birth you've put in is {dob.strftime('%B %d, %Y')}")
+
+st.markdown(
+    f"<span style='color:red'><strong>PLEASE USE THE CALENDAR ABOVE TO SELECT A DATE =]]</strong></span>",
+    unsafe_allow_html=True
+)
+
 st.markdown(
     f"<span style='color:red'><strong>The Date of Birth you've put in is {dob.strftime('%B %d, %Y')}</strong></span>",
     unsafe_allow_html=True
