@@ -71,6 +71,12 @@ drive = GoogleDrive(gauth)
 st.set_page_config(page_title="Tattoo & Piercing - Customer Consent & Release Form", page_icon="🖊️")
 st.title("🖊️ Tattoo & Piercing - Customer Consent & Release Form")
 
+
+st.markdown(
+    f"<span style='color:red'><strong>Please use the calendar to select your Date of Birth - You don't need to manually key it in =]]</strong></span>",
+    unsafe_allow_html=True
+)
+
 # --- DOB and Age Validation -------------------------------------------------
 dob = st.date_input(
     "Date of Birth",
@@ -82,10 +88,7 @@ dob = st.date_input(
 
 #st.write(f"The Date of Birth you've put in is {dob.strftime('%B %d, %Y')}")
 
-st.markdown(
-    f"<span style='color:red'><strong>PLEASE USE THE CALENDAR ABOVE TO SELECT A DATE =]]</strong></span>",
-    unsafe_allow_html=True
-)
+
 
 st.markdown(
     f"<span style='color:red'><strong>The Date of Birth you've put in is {dob.strftime('%B %d, %Y')}</strong></span>",
