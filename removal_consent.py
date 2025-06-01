@@ -76,6 +76,12 @@ with st.form("consent_form", clear_on_submit = False):
 
     st.markdown("Patient Information")
 
+    
+    st.markdown(
+    f"<span style='color:red'><strong>Please use the calendar to select your Date of Birth - You don't need to manually key it in =]]</strong></span>",
+    unsafe_allow_html=True
+)
+
 # --- DOB and Age Validation -------------------------------------------------
     dob = st.date_input(
         "Date of Birth",
@@ -86,11 +92,18 @@ with st.form("consent_form", clear_on_submit = False):
         key = "dob"
                         )
 
+    st.markdown(
+    f"<span style='color:red'><strong>The Date of Birth you've put in is {dob.strftime('%B %d, %Y')}</strong></span>",
+    unsafe_allow_html=True
+)
+
 
 # Calculate Age
     today = date.today()
     age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
     st.markdown(f"**Age (last birthday):** {age}")
+
+    
 
 # Name
     full_name = st.text_input("Full Name")
