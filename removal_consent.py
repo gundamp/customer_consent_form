@@ -218,7 +218,7 @@ with st.form("consent_form", clear_on_submit = False):
 
     price = st.number_input("Price (as agreed with Artist)", min_value = 0, format = "%d", step = 1)
 
-    source = st.selectbox("How did you hear about us =]", ["Instagram", "Google", "Red Note / 小红书", "Website", "Friends / Word of Mouth", ， "Other"], key = "source")
+    source = st.selectbox("How did you hear about us =]", ["Instagram", "Google", "Red Note / 小红书", "Website", "Friends / Word of Mouth",  "Other"], key = "source")
 
 
 
