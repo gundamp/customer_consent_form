@@ -51,7 +51,7 @@ SPREADSHEET_NAME = 'customer_consent_form_little_art_tattoo'
 SHEET_NAME = 'collate'
 sheet_by_name = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name = SHEET_NAME)
 SHEET_NAME_backup = 'backup'
-sheet_by_name = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name = SHEET_NAME)
+#sheet_by_name = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name = SHEET_NAME)
 sheet_backup = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name = SHEET_NAME_backup)
 
 
