@@ -47,7 +47,7 @@ def connect_to_gsheet(creds, spreadsheet_name, sheet_name):
     return spreadsheet.worksheet(sheet_name)
 
 # Set Google Sheet info
-SPREADSHEET_NAME = 'customer_consent_form_little_art_tattoo'
+SPREADSHEET_NAME = 'Burwood'
 SHEET_NAME = 'collate'
 sheet_by_name = connect_to_gsheet(creds, SPREADSHEET_NAME, sheet_name = SHEET_NAME)
 SHEET_NAME_backup = 'backup'
