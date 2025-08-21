@@ -191,13 +191,15 @@ with st.form("consent_form", clear_on_submit = False):
     id_number = st.text_input("ID Number")
     id_expiry_date = st.date_input("ID Expiry Date", datetime.today(), min_value = date.today(), max_value=date(2049,12,31))
     #artist = st.selectbox("Artist", ["Artist 1", "Artist 2", "Artist 3"])
-    placement = st.text_input("Placement (部位)")
-    description = st.text_input("Description (内容, P for Piercing)")
+    placement = st.text_input("Placement")
+    description = st.text_input("Description (P for Piercing)")
 
     ### Allow $0
     price = st.number_input("Price (as agreed with Artist)", min_value = 0, format = "%d", step = 1)
 
-    source = st.selectbox("How did you hear about us =]", ["Instagram", "Google", "Red Note / 小红书", "Website", "Friends / Word of Mouth", "Other"], key = "source")
+    pay_method = st.selectbox("Payment Method", ["Cash", "Card", "Payment Not Required"])
+
+    source = st.selectbox("How did you hear about us =]", ["Instagram", "Google", "Red Note", "Website", "Friends / Word of Mouth", "Other"], key = "source")
 
     st.markdown("""
     <u><strong>PLEASE ANSWER THE FOLLOWING QUESTIONS</strong></u><br>
@@ -242,7 +244,7 @@ phone_valid = re.fullmatch(r"0\d{9}", phone)
 email_valid = re.fullmatch(r"^[\w\.-]+@[\w\.-]+\.\w+$", email)
 
 if submitted:
-    if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not placement or not description or not signature:
+    if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not placement or not description or not signature or not pay_method:
         st.error("❌ Please complete all required fields.")
 
     elif not phone_valid:
@@ -263,6 +265,7 @@ if submitted:
             artist,
             service,
             price,
+            pay_method,
             description,
             placement,
             suburb,
@@ -311,7 +314,3 @@ if submitted:
 # --- Footer ------------------------------------------------------------------
 st.markdown("---")
 # st.caption("Built with ❤️ using Streamlit")
-
-
-
-
