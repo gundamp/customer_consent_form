@@ -85,17 +85,20 @@ with st.form("consent_form", clear_on_submit = False):
 # --- DOB and Age Validation -------------------------------------------------
     dob = st.date_input(
         "Date of Birth",
-        #value=datetime.today(),
-        value = date(2000, 1, 1),
-        min_value = date(1900, 1, 1),
-        max_value = date.today(),
-        key = "dob"
-                        )
+        value=datetime.today(),
+        min_value=date(1900, 1, 1),
+        max_value=date.today(),
+        key="dob"
+    )
+
+#st.write(f"The Date of Birth you've put in is {dob.strftime('%B %d, %Y')}")
+
+
 
     st.markdown(
-    f"<span style='color:red'><strong>The Date of Birth you've put in is {dob.strftime('%B %d, %Y')}</strong></span>",
-    unsafe_allow_html=True
-)
+        f"<span style='color:red'><strong>The Date of Birth you've put in is {dob.strftime('%B %d, %Y')}</strong></span>",
+        unsafe_allow_html=True
+    )
 
 
 # Calculate Age
@@ -287,5 +290,6 @@ if submitted:
 
 # --- Footer ------------------------------------------------------------------
 st.markdown("---")
+
 
 
