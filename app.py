@@ -191,8 +191,8 @@ with st.form("consent_form", clear_on_submit = False):
     id_number = st.text_input("ID Number")
     id_expiry_date = st.date_input("ID Expiry Date", datetime.today(), min_value = date.today(), max_value=date(2049,12,31))
     #artist = st.selectbox("Artist", ["Artist 1", "Artist 2", "Artist 3"])
-    placement = st.text_input("Placement (i.e. where)")
-    description = st.text_input("Description (P for Piercing)")
+    #placement = st.text_input("Placement (i.e. where)")
+    #description = st.text_input("Description (P for Piercing)")
 
     ### Allow $0
     price = st.number_input("Price (as agreed with Artist)", min_value = 0, format = "%d", step = 1)
@@ -244,7 +244,7 @@ phone_valid = re.fullmatch(r"0\d{9}", phone)
 email_valid = re.fullmatch(r"^[\w\.-]+@[\w\.-]+\.\w+$", email)
 
 if submitted:
-    if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not artist or not placement or not description or not signature or not pay_method:
+    if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not artist or not signature or not pay_method:
         st.error("❌ Please complete all required fields.")
 
     elif not phone_valid:
@@ -266,8 +266,8 @@ if submitted:
             service,
             price,
             pay_method,
-            description,
-            placement,
+            #description,
+            #placement,
             suburb,
             source,
             full_name,
