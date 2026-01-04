@@ -73,7 +73,7 @@ st.title("🖊️ Tattoo & Piercing - Customer Consent & Release Form")
 
 
 st.markdown(
-    f"<span style='color:red'><strong>Please use the calendar to select your Date of Birth - You don't need to manually key it in =]]</strong></span>",
+    f"<span style='color:blue'><strong>Please use the calendar to select your Date of Birth - You don't need to manually key it in =]]</strong></span>",
     unsafe_allow_html=True
 )
 
@@ -244,7 +244,7 @@ phone_valid = re.fullmatch(r"0\d{9}", phone)
 email_valid = re.fullmatch(r"^[\w\.-]+@[\w\.-]+\.\w+$", email)
 
 if submitted:
-    if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not placement or not description or not signature or not pay_method:
+    if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not artist or not placement or not description or not signature or not pay_method:
         st.error("❌ Please complete all required fields.")
 
     elif not phone_valid:
