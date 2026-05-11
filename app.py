@@ -195,7 +195,7 @@ with st.form("consent_form", clear_on_submit = False):
     #description = st.text_input("Description (P for Piercing)")
     deposit = st.number_input("Deposit ($0 if not applicable)", min_value = 0, format = "%d", step = 1)
     ### Allow $0
-    price = st.number_input("Total Price (as agreed with Artist)", min_value = 0, format = "%d", step = 1)
+    price = st.number_input("Total Price", min_value = 0, format = "%d", step = 1)
 
     pay_method = st.selectbox("Payment Method", ["Cash", "Card", "Payment Not Required"])
 
