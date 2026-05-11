@@ -193,7 +193,7 @@ with st.form("consent_form", clear_on_submit = False):
     #artist = st.selectbox("Artist", ["Artist 1", "Artist 2", "Artist 3"])
     #placement = st.text_input("Placement (i.e. where)")
     #description = st.text_input("Description (P for Piercing)")
-    deposit = st.number_input("Deposit")
+    deposit = st.number_input("Deposit ($0 if not applicable)", min_value = 0, format = "%d", step = 1)
     ### Allow $0
     price = st.number_input("Total Price (as agreed with Artist)", min_value = 0, format = "%d", step = 1)
 
@@ -233,7 +233,7 @@ with st.form("consent_form", clear_on_submit = False):
                 """)
 
     date_of_consent = st.date_input("Date of Consent", datetime.today())
-    signature = st.text_area("Signature (please print your name)")
+    #signature = st.text_area("Signature (please print your name)")
 
     disabled = underage_tattoo #or underage_other
     submitted = st.form_submit_button("Submit", disabled = disabled)
@@ -291,7 +291,6 @@ if submitted:
             allergy_details,
             q_other,
             other_details,
-            '',
             guardian_name,
             guardian_id_type,
             guardian_id_no
