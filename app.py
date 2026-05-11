@@ -180,7 +180,7 @@ with st.form("consent_form", clear_on_submit = False):
     if email and not re.fullmatch(email_pattern, email):
         st.error("Please enter a valid email address.")
 
-    suburb = st.text_input("Suburb")
+    postcode = st.text_input("Postcode")
     phone = st.text_input("Phone Number")
 
 # Validate the phone number
@@ -193,9 +193,9 @@ with st.form("consent_form", clear_on_submit = False):
     #artist = st.selectbox("Artist", ["Artist 1", "Artist 2", "Artist 3"])
     #placement = st.text_input("Placement (i.e. where)")
     #description = st.text_input("Description (P for Piercing)")
-
+    deposit = st.number_input("Deposit")
     ### Allow $0
-    price = st.number_input("Price (as agreed with Artist)", min_value = 0, format = "%d", step = 1)
+    price = st.number_input("Total Price (as agreed with Artist)", min_value = 0, format = "%d", step = 1)
 
     pay_method = st.selectbox("Payment Method", ["Cash", "Card", "Payment Not Required"])
 
@@ -244,7 +244,7 @@ phone_valid = re.fullmatch(r"0\d{9}", phone)
 email_valid = re.fullmatch(r"^[\w\.-]+@[\w\.-]+\.\w+$", email)
 
 if submitted:
-    if not full_name or not email or not suburb or not phone or not id_type or not id_number or not id_expiry_date or not artist or not signature or not pay_method:
+    if not full_name or not email or not phone or not id_type or not id_number or not id_expiry_date or not artist or not pay_method:
         st.error("❌ Please complete all required fields.")
 
     elif not phone_valid:
@@ -264,11 +264,12 @@ if submitted:
             date_of_consent.isoformat(),
             artist,
             service,
+            deposit,
             price,
             pay_method,
             '',
             '',
-            suburb,
+            postcode,
             source,
             full_name,
             dob.isoformat(),
@@ -290,7 +291,7 @@ if submitted:
             allergy_details,
             q_other,
             other_details,
-            signature,
+            '',
             guardian_name,
             guardian_id_type,
             guardian_id_no
