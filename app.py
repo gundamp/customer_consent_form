@@ -234,6 +234,7 @@ with st.form("consent_form", clear_on_submit = False):
 
     date_of_consent = st.date_input("Date of Consent", datetime.today())
     #signature = st.text_area("Signature (please print your name)")
+    signature = ""
 
     disabled = underage_tattoo #or underage_other
     submitted = st.form_submit_button("Submit", disabled = disabled)
@@ -291,6 +292,7 @@ if submitted:
             allergy_details,
             q_other,
             other_details,
+            signature,
             guardian_name,
             guardian_id_type,
             guardian_id_no
