@@ -73,7 +73,7 @@ st.title("🖊️ Tattoo & Piercing - Customer Consent & Release Form")
 
 
 st.markdown(
-    f"<span style='color:blue'><strong>Please use the calendar to select your Date of Birth - You don't need to manually key it in =]]</strong></span>",
+    f"<span style='color:blue'><strong>Please put in Date of Birth =]]</strong></span>",
     unsafe_allow_html=True
 )
 
@@ -104,25 +104,24 @@ dob_day = st.selectbox(
     [""] + list(range(1, 32))
 )
 
-if not dob_year or not dob_month or not dob_day:
-    st.error("Please select your full Date of Birth.")
-    st.stop()
+dob = None
+age = None
+dob_error = False
 
-try:
-    dob = date(int(dob_year), int(dob_month), int(dob_day))
-except ValueError:
-    st.error("Please select a valid date.")
-    st.stop()
+if dob_year and dob_month and dob_day:
+    try:
+        dob = date(int(dob_year), int(dob_month), int(dob_day))
+        age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
 
+        st.markdown(
+            f"<span style='color:blue'><strong>The Date of Birth you've put in is {dob.strftime('%B %d, %Y')}</strong></span>",
+            unsafe_allow_html=True
+        )
+        st.markdown(f"**Age (last birthday):** {age}")
 
-#st.write(f"The Date of Birth you've put in is {dob.strftime('%B %d, %Y')}")
-
-
-
-st.markdown(
-    f"<span style='color:blue'><strong>The Date of Birth you've put in is {dob.strftime('%B %d, %Y')}</strong></span>",
-    unsafe_allow_html=True
-)
+    except ValueError:
+        dob_error = True
+        st.error("Please select a valid Date of Birth.")
 
 service = st.selectbox("Select a Service", ["Tattoo", "Piercing"], key = "service")
 
@@ -135,12 +134,12 @@ else:
     artist = st.text_input("Artist")
 
 # Calculate Age
-today = date.today()
-age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
-st.markdown(f"**Age (last birthday):** {age}")
+# today = date.today()
+# age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+# st.markdown(f"**Age (last birthday):** {age}")
 
-underage_tattoo = service == "Tattoo" and age < 18
-underage_other = service != "Tattoo" and age < 16
+underage_tattoo = dob is not None and service == "Tattoo" and age < 18
+underage_other = dob is not None and service != "Tattoo" and age < 16
 
 guardian_name = ""
 guardian_id_type = "Other"
@@ -274,7 +273,14 @@ phone_valid = re.fullmatch(r"0\d{9}", phone)
 email_valid = re.fullmatch(r"^[\w\.-]+@[\w\.-]+\.\w+$", email)
 
 if submitted:
-    if not full_name or not email or not phone or not id_type or not id_number or not id_expiry_date or not artist or not pay_method:
+
+    if dob is None:
+        st.error("❌ Please select your full Date of Birth.")
+
+    elif dob_error:
+        st.error("❌ Please select a valid Date of Birth.")
+        
+    elif not full_name or not email or not phone or not id_type or not id_number or not id_expiry_date or not artist or not pay_method:
         st.error("❌ Please complete all required fields.")
 
     elif not phone_valid:
