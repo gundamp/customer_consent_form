@@ -78,13 +78,42 @@ st.markdown(
 )
 
 # --- DOB and Age Validation -------------------------------------------------
-dob = st.date_input(
-    "Date of Birth",
-    value=date(1990, 1, 1),
-    min_value=date(1900, 1, 1),
-    max_value=date.today(),
-    key="dob"
+# dob = st.date_input(
+#     "Date of Birth",
+#     value=date(1990, 1, 1),
+#     min_value=date(1900, 1, 1),
+#     max_value=date.today(),
+#     key="dob"
+# )
+
+today = date.today()
+
+dob_year = st.selectbox(
+    "Birth Year",
+    [""] + list(range(today.year, 1899, -1))
 )
+
+dob_month = st.selectbox(
+    "Birth Month",
+    [""] + list(range(1, 13)),
+    format_func=lambda m: "" if m == "" else date(2000, m, 1).strftime("%B")
+)
+
+dob_day = st.selectbox(
+    "Birth Day",
+    [""] + list(range(1, 32))
+)
+
+if not dob_year or not dob_month or not dob_day:
+    st.error("Please select your full Date of Birth.")
+    st.stop()
+
+try:
+    dob = date(int(dob_year), int(dob_month), int(dob_day))
+except ValueError:
+    st.error("Please select a valid date.")
+    st.stop()
+
 
 #st.write(f"The Date of Birth you've put in is {dob.strftime('%B %d, %Y')}")
 
