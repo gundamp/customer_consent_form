@@ -80,7 +80,7 @@ st.markdown(
 # --- DOB and Age Validation -------------------------------------------------
 dob = st.date_input(
     "Date of Birth",
-    value=datetime.today(),
+    value=date(1990, 1, 1),
     min_value=date(1900, 1, 1),
     max_value=date.today(),
     key="dob"
