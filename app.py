@@ -105,7 +105,7 @@ dob_day = st.selectbox(
 )
 
 location = st.selectbox(
-    "Location",
+    "Shop Location",
     ["", "Burwood", "Chatswood", "Parramatta"],
     key="location"
 )
