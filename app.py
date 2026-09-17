@@ -104,6 +104,13 @@ dob_day = st.selectbox(
     [""] + list(range(1, 32))
 )
 
+location = st.selectbox(
+    "Location",
+    ["", "Burwood", "Chatswood", "Parramatta"],
+    key="location"
+)
+
+
 dob = None
 age = None
 dob_error = False
@@ -280,7 +287,7 @@ if submitted:
     elif dob_error:
         st.error("❌ Please select a valid Date of Birth.")
         
-    elif not full_name or not email or not phone or not id_type or not id_number or not id_expiry_date or not artist or not pay_method:
+    elif not location or not full_name or not email or not phone or not id_type or not id_number or not id_expiry_date or not artist or not pay_method:
         st.error("❌ Please complete all required fields.")
 
     elif not phone_valid:
@@ -298,6 +305,7 @@ if submitted:
     else:
         row = [
             date_of_consent.isoformat(),
+            location,
             artist,
             service,
             deposit,
